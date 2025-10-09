@@ -6,31 +6,39 @@ static char *g_msg;
 
 void build_msg(unsigned char c)
 {
-    static int len = 0;
-    char *new;
+    static int len;
+    char *new_msg;
     int i;
 
 	i = -1;
-    if (!c)
+    if (!c) 
     {
-        if (g_msg)
-        {
-            write(1, g_msg, len);
-            write(1, "\n", 1);
-            free(g_msg);
-        }
-        g_msg = NULL;
-        len = 0;
+        print_message(len);
         return;
     }
-    new = malloc(len + 2);
-    if (!new) exit(1);
+
+    new_msg = malloc(len + 2); 
+    if (!new_msg)
+        exit(1);
+
     while (++i < len)
-		 new[i] = g_msg[i];
-    new[len++] = c;
-    new[len] = '\0';
+        new_msg[i] = g_msg[i];
+
+    new_msg[len++] = c;
+    new_msg[len] = '\0';
+
     free(g_msg);
-    g_msg = new;
+    g_msg = new_msg;
+}
+  void print_message(int len)
+{
+    if (g_msg)
+    {
+        write(1, g_msg, len);
+        write(1, "\n", 1);
+        free(g_msg);
+    }
+    g_msg = NULL;
 }
 
 void handler(int signal)
@@ -45,8 +53,8 @@ void handler(int signal)
 
     if (bit_index == 8)
     {
-        build_msg(character); // acumula caractere
-        if (character == '\0')  // reinicia ao fim da mensagem
+        build_msg(character); 
+        if (character == '\0')
         {
             bit_index = 0;
             character = 0;
