@@ -3,45 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
+/*   By: jocarlo2 <jocarlo2@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:03:38 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/08/27 17:30:37 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:53:01 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minitalk.h"
 
-void confirm_handler(int signal)
+void	confirm_handler(int signal)
 {
 	if (signal == SIGUSR1)
 	{
-		write (1, "Roger That, Over!\n", 18);
+		write(1, "Roger That, Over!\n", 18);
 		exit(0);
 	}
-	
-	
 }
-void send_msg(int pid, unsigned char c)
+
+void	send_msg(int pid, unsigned char c)
 {
-	int bit_index;
-	
+	int	bit_index;
+
 	bit_index = 0;
 	while (bit_index < 8)
 	{
 		if ((c >> bit_index) & 1)
-			kill (pid, SIGUSR1);
+			kill(pid, SIGUSR1);
 		else
-			kill (pid, SIGUSR2);
+			kill(pid, SIGUSR2);
 		usleep(100);
 		bit_index++;
 	}
 }
-int main(int argc, char **argv)
+
+int	main(int argc, char **argv)
 {
-	pid_t pid;
-	char *msg;
-	struct sigaction sa;
+	pid_t				pid;
+	char				*msg;
+	struct sigaction	sa;
 
 	sa.sa_handler = confirm_handler;
 	sa.sa_flags = SA_RESTART;

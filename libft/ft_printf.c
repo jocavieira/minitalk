@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
+/*   By: jocarlo2 <jocarlo2@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:35:08 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/05/16 17:25:56 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:00:22 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@ int	ft_putchar(int c)
 	return (write (1, &c, 1));
 }
 
-int ft_putstr(char *str)
+int	ft_putstr(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!str)
 		return (write(1, "(null)", 6));
 	while (str[i])
 		write(1, &str[i++], 1);
-	return (i);	
+	return (i);
 }
 
 int	ft_format(va_list *ap, const char fmt)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (fmt == 'c')
@@ -39,9 +39,9 @@ int	ft_format(va_list *ap, const char fmt)
 	else if (fmt == 's')
 		count += ft_putstr(va_arg(*ap, char *));
 	else if (fmt == 'd' || fmt == 'i')
-		count +=ft_putnbr(va_arg(*ap, int));
+		count += ft_putnbr(va_arg(*ap, int));
 	else if (fmt == 'u')
-		count +=ft_putnbr_u(va_arg(*ap, unsigned int));
+		count += ft_putnbr_u(va_arg(*ap, unsigned int));
 	else if (fmt == 'p')
 		count += ft_putptr(va_arg(*ap, void *));
 	else if (fmt == 'x')
@@ -84,10 +84,12 @@ int main(void)
 	char *str = "hello";
 	
 	printf("=== printf ===\n");
-	int count = printf("int %d, string %s hex: %x, hexU: %X, pointer: %p\n", 42, str, 42, 42, str);
+	int count = printf("int %d, string %s hex: %x, hexU:
+	%X, pointer: %p\n", 42, str, 42, 42, str);
 
 	printf("\n=== ft_printf ===\n");
-	int count1 = ft_printf("int %d, string %s hex: %x, hexU: %X, pointer: %p\n", 42, str, 42, 42, str);
+	int count1 = ft_printf("int %d, string %s hex: %x, 
+	hexU: %X, pointer: %p\n", 42, str, 42, 42, str);
 	printf("count std: %d\n", count);
 	ft_printf("my count: %d\n", count1);
 	printf(" standard iteste com %% no final %");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
+/*   By: jocarlo2 <jocarlo2@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:14:37 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/04/29 15:43:08 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:57:18 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		ft_lstdelone(*lst, del);
 		*lst = pos;
 	}
-		*lst = NULL;
-
+	*lst = NULL;
 }
 /*
 #include <stdio.h>

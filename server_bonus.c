@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
+/*   By: jocarlo2 <jocarlo2@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:02:00 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/10/09 09:43:31 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 13:54:14 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minitalk.h"
 
 static char	*g_msg;
-
 
 void	build_msg(unsigned char c)
 {
@@ -37,6 +36,7 @@ void	build_msg(unsigned char c)
 	free(g_msg);
 	g_msg = new_msg;
 }
+
 void	print_message(int len)
 {
 	if (g_msg)
@@ -47,40 +47,38 @@ void	print_message(int len)
 	}
 	g_msg = NULL;
 }
-void handler(int signal, siginfo_t *info, void *context)
+
+void	handler(int signal, siginfo_t *info, void *context)
 {
-    (void)context;
-    static int bit_index;
-    static unsigned char character;
+	static int				bit_index;
+	static unsigned char	character;
 
-    if (signal == SIGUSR1)
-        character |= (1 << bit_index);
-    bit_index++;
-
-    if (bit_index == 8)
-    {
-        build_msg(character);
-        if (character == '\0')
-            kill(info->si_pid, SIGUSR1);
-        bit_index = 0;
-        character = 0;
-    }
+	(void)context;
+	if (signal == SIGUSR1)
+		character |= (1 << bit_index);
+	bit_index++;
+	if (bit_index == 8)
+	{
+		build_msg(character);
+		if (character == '\0')
+			kill(info->si_pid, SIGUSR1);
+		bit_index = 0;
+		character = 0;
+	}
 }
-int main (void)
+
+int	main(void)
 {
-	struct sigaction sa;
-	int pid;
+	struct sigaction	sa;
+	int					pid;
 
 	pid = getpid();
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigemptyset(&sa.sa_mask);
-
 	ft_printf("The Server PID is : %d\n", pid);
-
-	sigaction(SIGUSR1,&sa, NULL);
+	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-
 	while (1)
 		pause();
 	return (0);

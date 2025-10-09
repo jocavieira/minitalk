@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
+/*   By: jocarlo2 <jocarlo2@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:03:26 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/05/08 16:41:00 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:01:21 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_putnbr(int n)
+int	ft_putnbr(int n)
 {
 	int		count;
 	long	nb;
 
 	count = 0;
 	nb = n;
-
 	if (nb < 0)
 	{
 		count += ft_putchar('-');
-		nb= -nb;
+		nb = -nb;
 	}
 	if (nb >= 10)
 		count += ft_putnbr(nb / 10);

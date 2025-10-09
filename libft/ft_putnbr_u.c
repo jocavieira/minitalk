@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
+/*   By: jocarlo2 <jocarlo2@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 17:32:41 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/05/08 09:48:42 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:04:59 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 int	ft_putnbr_u(unsigned int nb)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (nb >= 10)
 		count += ft_putnbr_u(nb / 10);
 	count += ft_putchar(nb % 10 + '0');
-
 	return (count);
 }
 /*
