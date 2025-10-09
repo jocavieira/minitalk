@@ -6,7 +6,7 @@
 /*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:03:38 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/08/26 19:35:58 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/06 11:39:52 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	pid = ft_atoi(argv[1]);
+	if (!pid)
+	{
+		ft_printf("Wrong! The PID is a number\n");
+		return (1);
+	}
 	msg = argv[2];
 	while (*msg)
 	{
