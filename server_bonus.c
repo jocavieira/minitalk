@@ -6,36 +6,65 @@
 /*   By: jocarlo2 <jocarlo2@sudent.42porto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 18:02:00 by jocarlo2          #+#    #+#             */
-/*   Updated: 2025/08/27 17:33:52 by jocarlo2         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:43:31 by jocarlo2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minitalk.h"
 
+static char	*g_msg;
+
+
+void	build_msg(unsigned char c)
+{
+	static int	len;
+	char		*new_msg;
+	int			i;
+
+	i = -1;
+	if (!c)
+	{
+		print_message(len);
+		return ;
+	}
+	new_msg = malloc(len + 2);
+	if (!new_msg)
+		exit(1);
+	while (++i < len)
+		new_msg[i] = g_msg[i];
+	new_msg[len++] = c;
+	new_msg[len] = '\0';
+	free(g_msg);
+	g_msg = new_msg;
+}
+void	print_message(int len)
+{
+	if (g_msg)
+	{
+		write(1, g_msg, len);
+		write(1, "\n", 1);
+		free(g_msg);
+	}
+	g_msg = NULL;
+}
 void handler(int signal, siginfo_t *info, void *context)
 {
-	(void)context;
-	static int bit_index;
-	static unsigned char character;
+    (void)context;
+    static int bit_index;
+    static unsigned char character;
 
-	if (signal == SIGUSR1)
-		character |= (1 << bit_index);
-	bit_index++;
-	if (bit_index == 8)
-	{
-		if (character == '\0')
-		{	
-			write (1, "\n", 1);
-			kill(info->si_pid, SIGUSR1);
-		}
-		else
-			write(1, &character, 1);
-			
-		bit_index = 0;
-		character = 0;
-		
-	}
-	
+    if (signal == SIGUSR1)
+        character |= (1 << bit_index);
+    bit_index++;
+
+    if (bit_index == 8)
+    {
+        build_msg(character);
+        if (character == '\0')
+            kill(info->si_pid, SIGUSR1);
+        bit_index = 0;
+        character = 0;
+    }
 }
 int main (void)
 {

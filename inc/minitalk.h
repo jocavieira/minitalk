@@ -8,4 +8,6 @@
 #include "../libft/inc/ft_printf.h"  
 #include "../libft/inc/libft.h"
 
+void	print_message(int len);
+
 #endif
